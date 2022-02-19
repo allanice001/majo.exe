@@ -1,7 +1,7 @@
 module.exports = {
  // Stauts config
  options: {
-  type: "dynamic", // dynamic | static
+  type: "static", // dynamic | static
  },
  static: {
   // Only if options.stype = static
