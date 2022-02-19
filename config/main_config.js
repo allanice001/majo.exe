@@ -24,7 +24,7 @@ module.exports = {
  patreon: "CrazyComunity", // Sponsor link
  ko_fi: "crazycommunity", // Sponsor link
  buymeacoffee: "CrazyCommunity", // Sponsor link
- open_collective: "igorkowalczyk", // Sponsor link
+ open_collective: "crazy-community", // Sponsor link
  scopes: "bot%20applications.commands", // Dashboard scopes
  permissions: "4294967287", // Default invite perms
  suggestions_channel: "838092194530852884", // Suggestions channel
