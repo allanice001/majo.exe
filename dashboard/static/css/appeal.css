@@ -175,9 +175,7 @@ iframe {
     justify-content: space-between;
 }
 
-.contact-form-title::after {
-    content: "Contact Us";
-}
+
 
 .contact-form-title {
     width: 100%;
@@ -361,6 +359,3 @@ body.done form>div {
     display: none !important;
 }
 
-body.done .contact-form-title::after {
-    content: "Your Response was Recieved."!important;
-}

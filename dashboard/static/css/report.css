@@ -21,9 +21,8 @@
     box-sizing: border-box;
     box-sizing: border-box;
     font-family: var(--font3);
-    scrollbar-color: #353535 transparent;
+scrollbar-color: #353535 transparent;
 scrollbar-width: thin;
-
 }
 
 ::-webkit-scrollbar {
@@ -45,6 +44,7 @@ background-color: var(--scrollbar-hover);
 ::-webkit-scrollbar-thumb:active {
 background-color: var(--scrollbar-active);
 }
+
 
 
 body {
@@ -176,7 +176,7 @@ iframe {
 }
 
 .contact-form-title::after {
-    content: "Contact Us";
+    content: "Report a User";
 }
 
 .contact-form-title {
@@ -362,5 +362,5 @@ body.done form>div {
 }
 
 body.done .contact-form-title::after {
-    content: "Your Response was Recieved."!important;
+    content: "Your Report was Recieved."!important;
 }
