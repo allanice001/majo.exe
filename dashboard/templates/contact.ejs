@@ -1,122 +1,112 @@
-<%- include("partials/head", { arc, bot, user, path, description, title: "Contact"}) %>
+<%- include("includes/head", { bot, user, path, title: "Contact" }) %>
 
-        <link rel="stylesheet" href="<%domain%>/css/contact.css" />
-        <script src="<%domain%>/js/contact.js"></script>
+<% if (user) { %>
+<% const checked = "contact" %>
+<%- include("includes/side_nav_other", { bot, user, path, checked_nav: checked }) %>
+<div class="content" style="padding: 40px 20px 40px;">
+<% } else { %>
+<div class="container-contact">
+ <div class="wrap-contact">
+<% } %>
+<link rel="stylesheet" type="text/css" href="<%= secure_connection %><%= domain %>/css/contact.css" />
+  <% if (alert) { %>
+  <% if(error == true) { %>
+  <style>
+   .banner {
+    background-color: #F05454;
+   }
+   </style>
+  }
+  <% } %>
+<div class="banner" style="width: 100%;">
+ <div class="banner-content">
+  <div class="banner-text">
+   <%= alert %>
+  </div>
+  <button class="banner-close" type="button">
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#FFFFFF"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"/></svg>
+  </button>
+  </div>
+ </div>
+ <script>
+const close_banner = document.querySelector(".banner-close")
+const banner = document.querySelector (".banner")
+close_banner.addEventListener("click", function () {
+  banner.style.display = "none";
+});
+</script>
+<% }  %>
+  <form action="/contact" class="contact-form validate-form" method="POST">
+  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+   <span class="contact-form-title"></span>
+   <% if (user) { %>
+   <input type="hidden" name="id" value="<%= user.id %>">
+   <input type="hidden" name="name" value="<%= user.username %>#<%= user.discriminator %>">
+   <div class="wrap-input rs1-wrap-input">
+    <span class="label">Name</span>
+    <input disabled class="input" maxlenght="100" autocomplete="off" spellcheck="false" title="You can't change your nickname here!" type="text" name="name_invi" placeholder="Name" value="<%= user.username %>#<%= user.discriminator %>" />
+    <span class="input-line"></span>
+   </div>
+   <div class="wrap-input rs1-wrap-input">
+    <span class="label">Email</span>
+    <input class="input" type="email" maxlenght="100" title="E-mail through which we can contact you" spellcheck="false" name="email" placeholder="wumpus@discord.com" required="true"/>
+    <span class="input-line"></span>
+   </div>
+   <div class="wrap-input">
+    <span class="label">Message</span>
+    <textarea class="input" name="message" maxlenght="1000" title="Message we have to read <3"spellcheck="true" placeholder="Your looong message" required="true"></textarea>
+    <span class="input-line"></span>
+   </div>
+   <% } else { %>
+   <div class="wrap-input rs1-wrap-input noactive">
+    <span class="label">Name</span>
+    <input class="input" title="Please login to contact us!" maxlenght="100" autocomplete="off" spellcheck="false" type="text" name="tmp_name" placeholder="Wumpus#0001" disabled />
+    <span class="input-line"></span>
+   </div>
+   <div class="wrap-input rs1-wrap-input noactive">
+    <span class="label">Email</span>
+    <input class="input" title="Please login to contact us!" maxlenght="100" autocomplete="off" spellcheck="false" type="email" name="tmp_email" placeholder="wumpus@discord.com" disabled />
+    <span class="input-line"></span>
+   </div>
+   <div class="wrap-input noactive">
+    <span class="label">Message</span>
+    <textarea class="input" title="Please login to contact us!" maxlenght="2000" autocomplete="off" spellcheck="true" name="tmp_message" placeholder="Your looong message" disabled></textarea>
+    <span class="input-line"></span>
+   </div>
+   <% } %>
 
-    <body>
-     <% if (user) { %>
-     <script>var userID = <%= user.
-     id %> </script>
-        <div class="container-contact">
-            <div class="wrap-contact">
-                <form class="contact-form validate-form">
-                    <span class="contact-form-title"></span>
-                    <div class="wrap-input rs1-wrap-input">
-                        <span class="label">Discord Name</span>
-                        <input disabled class="input" type="text" name="name" placeholder="Discord Name"
-                            
-                                value="<%= user.username %>#<%= user.discriminator %>"/>
+   <div class="container-contact-form-btn">
+   <% if (user) { %>
+      <div id="captcha"></div>
+   <script type="text/javascript">
+    var verifyCallback = function (response) {
+     console.log(response);
+    };
+    var onloadCallback = function () {
+     grecaptcha.render("captcha", {
+      sitekey: "<%= recaptcha %>",
+      callback: verifyCallback,
+      theme: "dark",
+     });
+    };
 
-                        <span class="input-line"></span>
-                    </div>
-                    <div class="wrap-input rs1-wrap-input">
-                        <span class="label">Email (optional)</span>
-                        <input class="input" type="email" name="email" placeholder="Your Email"
-                            
-                        />
-                        <span class="input-line"></span>
-                    </div>
+   </script>
+   </div>
+    <button class="link-button green" style="margin-top: 50px; margin-left: 0px" type="submit">Send</button>
+   <% } else { %>
+    <p>You must be logged in to contact us!</p>
+    </div>
+    <a href="<%= secure_connection %><%= domain %>/login" style="margin-left: 0" class="link-button green">Login</a>
+<% if (config.support_server) { %>
+<a href="<%= secure_connection %><%= domain %>/server" style="margin-left: 0;     display: flex; padding: 10px 17px;" class="link-button"><%- include('includes/icons/new_tab.ejs') %> Discord</a>
+<% } %>
+   <% } %>
+  </form>
+ </div>
+</div>
 
-                    <div class="wrap-input">
-                        <span class="label">Message</span>
-                        <textarea class="input" name="message" placeholder="Your Message" required></textarea>
-                        <span class="input-line"></span>
-                    </div>
-                    <div>
-      <span id="captcha" style="color:red"></span>
-      <br>
-      <div id="example1"></div>
-     </div>
-       <br>
-                    <br>
-                     <br>
-                    <br>
-                      <br>
-                      <br>
-                    <div class="container-contact-form-btn">
-                    
-      
-                        <button type="submit">Send</button>
-                    </div>
-                </form>
-              
-            </div>
-        </div>
-         <% } else { %>
-   <div class="container-contact">
-            <div class="wrap-contact">
-                <form class="contact-form validate-form">
-                    <span class="contact-form-title"></span>
-                    <div class="wrap-input rs1-wrap-input">
-                        <span class="label">Discord Name</span>
- <input class="input" type="text" name="name" placeholder="Discord Name" disabled/>
-                        <span class="input-line"></span>
-                    </div>
-                    <div class="wrap-input rs1-wrap-input">
-                        <span class="label">Email (optional)</span>
-                        <input class="input" type="email" name="email" placeholder="Email"
-                            
-                        />
-                        <span class="input-line"></span>
-                    </div>
-                    <div class="wrap-input">
-                        <span class="label">Message</span>
-                        <textarea class="input" name="message" placeholder="Your Message"></textarea>
-                        <span class="input-line"></span>
-                    </div>
-                    <div class="container-contact-form-btn">
-                    <p>You must be logged in to contact us.</p>
-                   
-                    </div>
-                    <br>
-                    <br>
-                 
-                     <div class="container-contact-form-btn">
-             <button  onclick="window.location.href='/login';" type="button">Login</button>
-             </div>
-                </form>
-              
-            </div>
-        </div>
-          <% } %>
-    </body>
-</html>
-    <script type="text/javascript">
-      var verifyCallback = function(response) {
-        alert(response);
-      };
-      var widgetId1;
-      var widgetId2;
-      var onloadCallback = function() {
-        // Renders the HTML element with id 'example1' as a reCAPTCHA widget.
-        // The id of the reCAPTCHA widget is assigned to 'widgetId1'.
-        widgetId1 = grecaptcha.render('example1', {
-          'sitekey' : '6LfG_H8aAAAAAKFRc2P0w5-slk2yz--FCuhQhS4O',
-          'theme' : 'dark'
-        });
-        widgetId2 = grecaptcha.render(document.getElementById('example2'), {
-          'sitekey' : '6LfG_H8aAAAAAKFRc2P0w5-slk2yz--FCuhQhS4O'
-        });
-        grecaptcha.render('example3', {
-          'sitekey' : '6LfG_H8aAAAAAKFRc2P0w5-slk2yz--FCuhQhS4O',
-          'callback' : verifyCallback,
-          'theme' : 'dark'
-        });
-      };
-    </script>
+<% if (user) { %>
+<script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>
+<% } %>
 
-    <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
-        async defer>
-    </script>
-
-  <%- include("partials/footer") %>
+<%- include("includes/footer") %>
