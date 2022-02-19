@@ -6,7 +6,7 @@ module.exports = {
  static: {
   // Only if options.stype = static
   message: `cc help || Made by Crazy_Gladiator`,
-  type: "PLAYING", // PLAYING | STREAMING | LISTENING | WATCHING
+  type: "WATCHING", // PLAYING | STREAMING | LISTENING | WATCHING
  },
  dates: {
   // Special dates for change status [Date Format: MM-DD]. If null = no special dates. Note: special date
