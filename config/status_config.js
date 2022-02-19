@@ -5,7 +5,7 @@ module.exports = {
  },
  static: {
   // Only if options.stype = static
-  message: `tralalala`,
+  message: `cc help || Made by Crazy_Gladiator`,
   type: "PLAYING", // PLAYING | STREAMING | LISTENING | WATCHING
  },
  dates: {
